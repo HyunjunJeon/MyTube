@@ -12,7 +12,7 @@ export const localMiddlewares = (req, res, next) => {
     res.locals.routes = routes;
     // sample login Object
     res.locals.user = {
-        isAuthenticated: true,
+        isAuthenticated: false,
         id: 1
     };
     next();

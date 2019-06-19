@@ -22,6 +22,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(morgan("dev"));
 app.use("/uploads", express.static("uploads"));
+app.use("/static", express.static("static"));
 app.use(localMiddlewares);
 
 // Routers

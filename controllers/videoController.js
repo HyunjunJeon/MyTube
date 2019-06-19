@@ -5,7 +5,7 @@ export const home = async (req, res) => {
     try {
         const videos = await Video.find({});
         res.render("home", { pageTitle: "Home" , videos });
-    }catch(err){
+    } catch(err){
         console.error(err);
         res.render("home", { pageTitle: "Home" , videos: []});
     }
@@ -56,7 +56,6 @@ export const videoDetail = async (req, res) => {
     }catch(error){
         res.redirect(routes.home);
     }
-
 };
 export const getEditVideo = async (req, res) => {
     const {
@@ -92,4 +91,4 @@ export const deleteVideo = async (req, res) => {
     }catch(err) {
         res.redirect(routes.home);
     }
-}
+};
