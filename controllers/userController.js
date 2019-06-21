@@ -1,11 +1,13 @@
 import routes from "../routes";
 import { User } from "../models";
 
+import passport from 'passport';
+
 export const getJoin = (req, res) => {
   res.render("join", { pageTitle: "Join" });
 };
 
-export const postJoin = async (req, res) => {
+export const postJoin = async (req, res, next) => {
   const {
     body: { name, email, password, password2 }
   } = req;
@@ -19,29 +21,43 @@ export const postJoin = async (req, res) => {
         name, email
       });
       await User.register(user, password);
+      next();
     }catch(err){
       console.error(err);
+      res.redirect(routes.home);
     }
-    // TODO: User LogIn
-    res.redirect(routes.home);
   }
 };
 
 export const getLogin = (req,res) => {
   res.render("login", { pageTitle: "LogIn" });
-}
+};
 
-export const postLogin = async (req, res) => {
-  res.redirect(routes.home);
+export const postLogin = passport.authenticate("local", {
+  failureRedirect: routes.login,
+  successRedirect: routes.home
+});
+
+export const githubLogin = passport.authenticate("github");
+
+export const postGithubLogin = (req, res) => {
+  res.send(routes.home);
+};
+
+export const githubLoginCallBack = (accessToken, refreshToken, profile, cb) => {
+  console.log(accessToken, refreshToken, profile, cb);
 };
 
 export const logout = (req, res) => {
-  // TODO: Log out Process
+  req.logout();
   res.redirect(routes.home);
 };
+
 export const userDetail = (req, res) =>
   res.render("userDetail", { pageTitle: "User Detail" });
+
 export const editProfile = (req, res) =>
   res.render("editProfile", { pageTitle: "Edit Profile" });
+
 export const changePassword = (req, res) =>
   res.render("changePassword", { pageTitle: "Change Password" });
