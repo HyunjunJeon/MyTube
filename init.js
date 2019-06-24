@@ -4,15 +4,21 @@ import app from './app';
 
 dotenv.config();
 
-import { User, Video, Comment } from "./models";
+import {
+  User,
+  Video,
+  Comment
+} from "./models";
 
-{User,
-Video,
-Comment} // Authenticate 활성화 되게끔 
+{
+  User,
+  Video,
+  Comment
+} // Authenticate 활성화 되게끔 
 
 const PORT = process.env.SERVER_PORT || 3000;
 
-const handleListen = (req,res)=>{
+const handleListen = (req, res) => {
   console.log(`✅  Listening on: http://localhost:${PORT}`);
 };
 
