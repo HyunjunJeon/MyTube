@@ -15,7 +15,6 @@ export const postJoin = async (req, res, next) => {
     res.status(400);
     res.render("join", {pageTitle: "Join"});
   }else {
-    // TODO: Register User
     try{
       const user = await User({
         name, email
@@ -41,10 +40,38 @@ export const postLogin = passport.authenticate("local", {
 export const githubLogin = passport.authenticate("github");
 
 export const postGithubLogin = (req, res) => {
-  res.send(routes.home);
+  res.redirect(routes.home);
 };
 
-export const githubLoginCallBack = (accessToken, refreshToken, profile, cb) => {
+export const githubLoginCallBack = async (accessToken, refreshToken, profile, cb) => {
+  const { _json: { id, avatar_url, name, email }} = profile;
+  try{
+    const user = await User.findOne({ email });
+    if(user){
+      user.githubId = id;
+      user.save();
+      return cb(null, user);
+    }
+    const newUser = await User.create({
+      email,
+      name,
+      githubId: id,
+      avatarUrl: avatar_url
+    });
+    return cb(null, newUser);
+  }catch(err){
+    console.error(err);
+    cb(err);
+  }
+};
+
+export const googleLogin = passport.authenticate("google");
+
+export const postGoogleLogin = (req, res) => {
+  res.redirect(routes.home);
+};
+
+export const googleLoginCallBack = (accessToken, refreshToken, profile, cb) => {
   console.log(accessToken, refreshToken, profile, cb);
 };
 
@@ -53,11 +80,19 @@ export const logout = (req, res) => {
   res.redirect(routes.home);
 };
 
-export const userDetail = (req, res) =>
-  res.render("userDetail", { pageTitle: "User Detail" });
-
 export const editProfile = (req, res) =>
   res.render("editProfile", { pageTitle: "Edit Profile" });
 
 export const changePassword = (req, res) =>
   res.render("changePassword", { pageTitle: "Change Password" });
+
+export const getMe = async (req, res) => {
+  const { params: { id }} = req;
+  try{
+    const existUser = await User.findById({id});
+    res.render("userDetail", { pageTitle: "User Detail", user });
+  }catch(err){
+    console.error(err);
+    res.redirect(routes.home);
+  }
+};

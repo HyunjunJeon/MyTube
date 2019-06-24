@@ -3,10 +3,12 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import passport from 'passport';
+//import passport from 'passport';
 import session from 'express-session';
 import mongoose from 'mongoose';
 import MongoStore from 'connect-mongo';
+import "./passport";
+import passport from 'passport';
 
 import routes from './routes';
 import { globalRouter, userRouter, videoRouter } from "./routers";
@@ -35,10 +37,12 @@ app.use(
     resave: true,
     saveUninitialized: true,
     store: new CookieStore({ mongooseConnection: mongoose.connection})
-  })
+  })// 서버 세션 저장
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
+
 app.use(localMiddlewares);
 
 // Routers

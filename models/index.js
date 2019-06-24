@@ -6,4 +6,4 @@ export {
     Comment,
     Video,
     User
-}
+};

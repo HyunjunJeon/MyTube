@@ -4,7 +4,11 @@ import app from './app';
 
 dotenv.config();
 
-import { user, video, comment } from "./models";
+import { User, Video, Comment } from "./models";
+
+{User,
+Video,
+Comment} // Authenticate 활성화 되게끔 
 
 const PORT = process.env.SERVER_PORT || 3000;
 
