@@ -5,7 +5,11 @@ dotenv.config();
 
 const multerVideo = multer({
     dest: "uploads/videos/"
-})
+});
+
+const multerAvatar = multer({
+    dest: "uploads/avatars/"
+});
 
 export const localMiddlewares = (req, res, next) => {
     res.locals.siteName = "MyTube";
@@ -31,3 +35,4 @@ export const onlyPrivate = (req, res, next) => {
 };
 
 export const uploadVideo = multerVideo.single("videoFile");
+export const uploadAvatar = multerAvatar.single("avatar");
