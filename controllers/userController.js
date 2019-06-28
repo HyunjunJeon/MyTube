@@ -193,7 +193,6 @@ export const userDetail = async (req, res) => {
   } = req;
   try {
     const existUser = await User.findById(id).populate("videos");
-    console.log(existUser);
     res.render("userDetail", {
       pageTitle: "User Detail",
       user: existUser

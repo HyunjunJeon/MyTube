@@ -14,7 +14,7 @@ const multerAvatar = multer({
 export const localMiddlewares = (req, res, next) => {
     res.locals.siteName = "MyTube";
     res.locals.routes = routes;
-    res.locals.logginUser = req.user || null;  
+    res.locals.logginUser = req.user || {};  
     next();
 };
 
