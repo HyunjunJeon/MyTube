@@ -14,22 +14,22 @@ const multerAvatar = multer({
 export const localMiddlewares = (req, res, next) => {
     res.locals.siteName = "MyTube";
     res.locals.routes = routes;
-    res.locals.logginUser = req.user || {};  
+    res.locals.logginUser = req.user || null;
     next();
 };
 
 export const onlyPublic = (req, res, next) => {
-    if(req.user){
+    if (req.user) {
         res.redirect(routes.home);
-    }else{
+    } else {
         next();
     }
 };
 
 export const onlyPrivate = (req, res, next) => {
-    if(req.user){
+    if (req.user) {
         next();
-    }else{
+    } else {
         res.redirect(routes.home);
     }
 };
