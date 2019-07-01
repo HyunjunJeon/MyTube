@@ -3,6 +3,11 @@ import routes from './routes';
 import dotenv from 'dotenv';
 dotenv.config();
 
+/*
+    1. File Upload
+    2. Access Authority
+*/
+
 const multerVideo = multer({
     dest: "uploads/videos/"
 });

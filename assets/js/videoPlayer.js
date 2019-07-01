@@ -92,6 +92,7 @@ function setVideoTotalTime(){
 }
 
 function handleVideoEnded(){
+    registerView(); 
     videoPlayer.currentTime = 0;
     playBtn.innerHTML = '<i class="fas fa-play"></i>';
 }
@@ -109,6 +110,13 @@ function handleVideoVolumeDrag(event){
         volumeBtn.innerHTML = '<i class="fas fa-volume-off"></i>';
     }
 }
+
+const registerView = () => {
+    const videoId = window.location.href.split("/videos/")[1]; 
+    fetch(`/api/${videoId}/view`, {
+        method: "POST"
+    });
+};
 
 function init() {
   playBtn.addEventListener("click", handlePlayClick);
