@@ -5,3 +5,4 @@ yarn.lock
 uploads
 # .env 은 실제로 가려야 하지만.. 로컬 DB 이고 운영에선 따로 쓸거기 때문에 일단 UP
 static
+build

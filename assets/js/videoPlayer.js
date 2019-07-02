@@ -1,3 +1,5 @@
+import getBlobDuration from "get-blob-duration";
+
 const videoContainer = document.getElementById("customVideoPlayer");
 const videoPlayer = document.querySelector("#customVideoPlayer video");
 const playBtn = document.getElementById("videoPlayBtn");
@@ -85,8 +87,13 @@ function getVideoCurrentTime(){
     }    
 }
 
-function setVideoTotalTime(){
-    const totalTime = dateFormat(videoPlayer.duration);
+async function setVideoTotalTime(){
+    // 임시로 다운로드를 받고, response 안에 있는 blob 파일을 리턴시켜줌
+    const blob = await fetch(videoPlayer.src)
+                        .then(res => res.blob());
+    // blob 파일의 길이를 알아낸다
+    const duration = await getBlobDuration(blob);
+    const totalTime = dateFormat(duration);
     videoTotalTime.innerHTML = totalTime;
     setInterval(getVideoCurrentTime, 1000);
 }
